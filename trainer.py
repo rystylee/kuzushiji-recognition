@@ -86,9 +86,9 @@ class Trainer(object):
                 correct += pred.eq(label.view_as(pred)).sum().item()
 
         test_loss /= len(self.test_loader.dataset)
-        accuracy = 100.0 * (correct / len(self.test_loader.dataset))
-        self.writer.add_scalar('accuracy/test_accuracy', n_itr)
-        tqdm.write(f'Test: Average loss: {test_loss}, Accuracy: {accuracy}%')
+        accuracy = correct / len(self.test_loader.dataset)
+        self.writer.add_scalar('accuracy/test_accuracy', accuracy, n_itr)
+        tqdm.write(f'Test: Average loss: {test_loss}, Accuracy: {accuracy * 100.0}%')
         self.model.train()
 
     def _save_models(self, epoch, n_itr):
